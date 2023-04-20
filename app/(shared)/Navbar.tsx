@@ -26,7 +26,13 @@ const Navbar = (props: Props) => {
           <h1 className='font-bold text-3xl md:text-5xl'>BLOG OF THE FUTURE</h1>
           <p className='text-sm mt-3'>Blog dedicated toward AI and generation and job automation</p>
         </div>
-        <div className='basis-full relative w-auto h-32 bg-wh-500'>Image right here</div>
+        <div className='basis-full relative w-auto h-32 '>
+          <Image
+             sizes='(max-width:: 480px) 100vw,
+                  (max-width: 768px) 75vw,
+                  (max-width: 1060px) 50vw, 33vw'
+            fill src={require('../../public/assets/ad-1.jpg')} alt='ad' style={{ objectFit: 'cover' }} />
+        </div>
       </div>
       <hr className='border-1 mx-10' />
     </header>

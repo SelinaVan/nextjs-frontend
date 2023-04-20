@@ -1,21 +1,43 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Post } from '@prisma/client';
 
 type TrendingCardProps = {
-    className?: string
+  className?: string;
+  post: Post
 };
 
-const TrendingCard = ({ className }: TrendingCardProps) => {
-    return (
-        <Link href='/'>
-        </Link>
-            
-    )
-}
-type Props = {
-    className?: string
+const TrendingCard = ({ className,post }: TrendingCardProps) => {
+  return (
+    <Link
+      className={`${className} sm:mt-0 sm:h-auto relative mt-7 block w-full h-96 hover:opacity-70`}
+       href={`${process.env.NEXT_PUBLIC_URL}/post/${post?.id}`}
+    >
+      <div className='z-0 relative w-full h-full'>
+        <Image
+          fill src={post?.image} alt={post?.title} style={{ objectFit: 'cover' }}
+          placeholder='blur'
+          sizes='(max-width:: 480px) 100vw,
+                  (max-width: 768px) 75vw,
+                  (max-width: 1060px) 50vw, 33vw'
+        />
+      </div>
+      <div className='absolute z-1 top-0 left-0 w-full h-full bg-gradient-gradual'></div>
+      <div className='absolute z-2 bottom-0 left-0 p-3'>
+        <h4 className='inline-block px-5 py-1 font-semibold bg-accent-orange text-wh-900'>
+          {post?.category}
+        </h4>
+        <div className='text-wh-100 mt-2'>{ post?.title}</div>
+      </div>
+    </Link>
+  );
 };
-const Trending = (props: Props) => {
+type Props = {
+  className?: string;
+  posts: Array<Post>
+};
+const Trending = ({posts}: Props) => {
   return (
     <section className='pt-3 pb-10'>
       <div className='flex items-center gap-3'>
@@ -38,11 +60,16 @@ const Trending = (props: Props) => {
       </div> */}
       {/* grid */}
       <div className='sm:grid gap-5 grid-cols-4 grid-rows-2 sm:h-[600px] my-3'>
-        <div className='col-span-2 row-span-2 bg-wh-500'></div>
-        <div className='col-span-2 row-span-1 bg-wh-500 '></div>
-        <div className='col-span-1 row-span-1 bg-wh-500 '></div>
-        <div className='col-span-1 row-span-1 bg-wh-500'></div>
+        <TrendingCard className='col-span-2 row-span-2 bg-wh-500' post={posts[0]} />
+        <TrendingCard className='col-span-2 row-span-1 bg-wh-500 ' post={posts[1]}/>
+        <TrendingCard className='col-span-1 row-span-1 bg-wh-500 ' post={posts[2]}/>
+        <TrendingCard className='col-span-1 row-span-1 bg-wh-500' post={posts[3]}/>
       </div>
+      <p className='text-sm'>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sunt natus temporibus
+        cum ea, itaque ducimus sit at asperiores vitae tempora quaerat ex eveniet sequi ab dicta
+        magni culpa beatae!
+      </p>
     </section>
   );
 };
